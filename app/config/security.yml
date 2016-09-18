@@ -1,0 +1,34 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory:
+            memory:
+                users:
+                    diar:
+                        password: diarpass
+                        roles: 'ROLE_ADMIN'
+        my_db_provider:
+            entity:
+                class: AppBundle:User
+                property: username
+    encoders:
+        AppBundle\Entity\User: bcrypt
+
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        default:
+            anonymous: ~
+            http_basic: ~
+            provider: my_db_provider
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_ADMIN }
