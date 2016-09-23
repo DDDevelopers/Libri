@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Hello there</h1>
+    <h1>Hello there, {{ app.user.name }}</h1>
+    <p>there are some featured books !</p>
+    <ul>
+        {% for book in books %}
+            <li>{{ book.title }} <strong>By</strong> {{ book.author.firstName }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

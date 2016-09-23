@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diar
- * Date: 9/14/16
- * Time: 10:09 PM
- */
-
 namespace AppBundle\Entity;
 
 
@@ -32,7 +25,7 @@ class Author
      */
     private $lastName;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $email;
     /**
@@ -184,6 +177,7 @@ class Author
     public function __construct()
     {
         $this->books = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
