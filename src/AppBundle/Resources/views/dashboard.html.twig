@@ -3,9 +3,11 @@
 {% block body %}
     <h1>Hello there, {{ app.user.name }}</h1>
     <p>there are some featured books !</p>
+    <a href="{{ path('add_new_book') }}" class="btn btn-sm btn-primary">{{ 'Add a book'|trans }}</a>
+    <a href="{{ path('new_author') }}" class="btn btn-sm btn-primary">{{ 'New author'|trans }}</a>
     <ul>
         {% for book in books %}
-            <li>{{ book.title }} <strong>By</strong> {{ book.author.firstName }}</li>
+            <li class="list-group-item"> {{ book.title }} <strong>By</strong> {{ book.author.firstName }} <span class="badge"><a href="{{ path('edit_the_book', {id: book.id}) }}"><i class="fa fa-edit">Edit</i></a></span></li>
         {% endfor %}
     </ul>
 {% endblock %}

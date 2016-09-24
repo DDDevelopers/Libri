@@ -1,0 +1,15 @@
+.idea
+.git
+app/config/parameters.yml
+composer.lock
+var/cache
+var/logs
+var/sessions
+var/bootstrap.php.cache
+var/cache/dev/
+var/cache/prod/
+var/logs/dev.log
+var/logs/prod.log
+var/sessions/dev/
+var/sessions/prod/
+vendor/

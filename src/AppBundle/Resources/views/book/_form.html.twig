@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+            {{ form_row(form.author) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.pages, {'label': 'Number of pages'}) }}
+            {{ form_row(form.publishedAt) }}
+<button class="btn btn-sm btn-primary" type="submit" formnovalidate>Save</button>
+{{ form_end(form) }}

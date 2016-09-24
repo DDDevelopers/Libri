@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -18,18 +19,23 @@ class Book
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $title;
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $description;
     /**
+     * @Assert\NotBlank()
+     * @Assert\Range(min=0, minMessage="Negative number ..! C'mon give me a real number.")
      * @ORM\Column(type="integer")
      */
     private $pages;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Author", inversedBy="books")
+     * @Assert\NotBlank()
      */
     private $author;
     /**
@@ -43,8 +49,15 @@ class Book
     /**
      * @var
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\NotBlank()
      */
     private $publishedAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * @return mixed
