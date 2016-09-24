@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorRepository")
  * @ORM\Table(name="author")
  */
 class Author
@@ -177,7 +177,8 @@ class Author
     public function __construct()
     {
         $this->books = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
     }
 
     /**
@@ -212,5 +213,10 @@ class Author
     public function getBooks()
     {
         return $this->books;
+    }
+
+    public function __toString()
+    {
+        return $this->getFirstName();
     }
 }

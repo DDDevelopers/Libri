@@ -40,6 +40,27 @@ class Book
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+    /**
+     * @var
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $publishedAt;
+
+    /**
+     * @return mixed
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param mixed $publishedAt
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+    }
 
     /**
      * Get id
