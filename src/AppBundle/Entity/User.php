@@ -33,7 +33,7 @@ class User implements UserInterface, \Serializable
      */
     private $lastname;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $username;
     /**
@@ -60,6 +60,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+    private $plainPassword;
 
     public function __construct()
     {
@@ -297,6 +298,7 @@ class User implements UserInterface, \Serializable
 
     public function eraseCredentials()
     {
+        $this->plainPassword = null;
     }
 
     /** @see \Serializable::serialize() */
@@ -322,4 +324,23 @@ class User implements UserInterface, \Serializable
             // $this->salt
             ) = unserialize($serialized);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
+    }
+
+
 }

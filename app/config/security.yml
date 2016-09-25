@@ -13,7 +13,7 @@ security:
         my_db_provider:
             entity:
                 class: AppBundle:User
-                property: username
+                property: email
     encoders:
         AppBundle\Entity\User: bcrypt
 
@@ -25,10 +25,11 @@ security:
             security: false
         main:
             anonymous: ~
-            provider: my_db_provider
-            form_login:
-                login_path: login
-                check_path: login
+            guard:
+                authenticators:
+                    - app.security.authenticator_guard
+            logout:
+                path: /logout
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
