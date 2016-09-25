@@ -17,6 +17,8 @@ security:
     encoders:
         AppBundle\Entity\User: bcrypt
 
+    role_hierarchy:
+        ROLE_USER: [ROLE_STORE, ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -30,7 +32,7 @@ security:
                     - app.security.authenticator_guard
             logout:
                 path: /logout
-
+            switch_user: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

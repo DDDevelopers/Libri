@@ -10,11 +10,14 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @UniqueEntity(fields={"email"}, message="Looks like you already have an account.")
  */
 class User implements UserInterface, \Serializable
 {
@@ -26,13 +29,16 @@ class User implements UserInterface, \Serializable
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $name;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $lastname;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", unique=true)
      */
     private $username;
@@ -41,6 +47,7 @@ class User implements UserInterface, \Serializable
      */
     private $password;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
@@ -60,6 +67,10 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $roles = [];
     private $plainPassword;
 
     public function __construct()
@@ -293,7 +304,16 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $roles = $this->roles;
+        if(!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        return $roles;
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
     }
 
     public function eraseCredentials()
@@ -341,6 +361,7 @@ class User implements UserInterface, \Serializable
         $this->plainPassword = $plainPassword;
         $this->password = null;
     }
+
 
 
 }

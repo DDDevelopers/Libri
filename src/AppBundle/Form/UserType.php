@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,12 +21,22 @@ class UserType extends AbstractType
             ->add('name')
             ->add('lastname')
             ->add('username')
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat password']
             ])
-            ->add('email');
+            ->add('email')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'User' => 'ROLE_USER',
+                    'Store' => 'ROLE_STORE',
+                    'Admin' => 'ROLE_ADMIN'
+                ],
+                'multiple' => true,
+                'expanded' => true //this will convert it to checkboxes
+            ])
+        ;
     }
     
     /**
