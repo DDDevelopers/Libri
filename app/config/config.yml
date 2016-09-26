@@ -31,6 +31,10 @@ framework:
     fragments:       ~
     http_method_override: true
     assets: ~
+    serializer:
+        enable_annotations: true
+        cache: serializer.mapping.cache.apc
+        name_converter: 'serializer.name_converter.camel_case_to_snake_case'
 
 # Twig Configuration
 twig:

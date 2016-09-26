@@ -15,3 +15,8 @@ services:
         autowire: true
         tags:
             - { name: doctrine.event_subscriber}
+    get_set_method_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+        public: false
+        tags:
+            - { name: serializer.normalizer }
