@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Book;
 use AppBundle\Form\BookType;
+use AppBundle\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,8 +20,13 @@ class BookController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $book = $form->getData();
             $em = $this->getDoctrine()->getManager();
+            if($book = $em->getRepository('AppBundle:Book')->findBookByTitle($form->getData()->getTitle())) {
+                $book->setPeacesInShelf($book->getPeacesInShelf() + 1);
+            }else{
+                $book = $form->getData();
+                $book->setPeacesInShelf(1);
+            }
             $em->persist($book);
             $em->flush();
 

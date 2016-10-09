@@ -4,5 +4,7 @@
             {{ form_row(form.description) }}
             {{ form_row(form.pages, {'label': 'Number of pages'}) }}
             {{ form_row(form.publishedAt) }}
+            {{ form_row(form.isForSale, {'label': 'I wan\'t to sell it.'}) }}
+            {{ form_row(form.isForExchange, {'label': 'I wan\'t to exchange it.'}) }}
 <button class="btn btn-sm btn-primary" type="submit" formnovalidate>Save</button>
 {{ form_end(form) }}

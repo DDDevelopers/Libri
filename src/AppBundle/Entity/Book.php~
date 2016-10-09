@@ -3,9 +3,10 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BookRepository")
  * @ORM\Table(name="book")
  */
 class Book
@@ -18,18 +19,23 @@ class Book
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $title;
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $description;
     /**
+     * @Assert\NotBlank()
+     * @Assert\Range(min=0, minMessage="Negative number ..! C'mon give me a real number.")
      * @ORM\Column(type="integer")
      */
     private $pages;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Author", inversedBy="books")
+     * @Assert\NotBlank()
      */
     private $author;
     /**
@@ -40,6 +46,48 @@ class Book
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+    /**
+     * @var
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $publishedAt;
+    /**
+     * @var
+     * @ORM\Column(name="is_for_sale", type="boolean")
+     */
+    private $isForSale = 1;
+    /**
+     * @var
+     * @ORM\Column(name="is_for_exchange", type="boolean")
+     */
+    private $isForExchange = 1;
+    /**
+     * @ORM\Column(name="peaces_in_shelf", type="integer")
+     */
+    private $peacesInShelf = 1;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param mixed $publishedAt
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+    }
 
     /**
      * Get id
@@ -193,5 +241,53 @@ class Book
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set isForSale
+     *
+     * @param boolean $isForSale
+     *
+     * @return Book
+     */
+    public function setIsForSale($isForSale)
+    {
+        $this->isForSale = $isForSale;
+
+        return $this;
+    }
+
+    /**
+     * Get isForSale
+     *
+     * @return boolean
+     */
+    public function getIsForSale()
+    {
+        return $this->isForSale;
+    }
+
+    /**
+     * Set isForExchange
+     *
+     * @param boolean $isForExchange
+     *
+     * @return Book
+     */
+    public function setIsForExchange($isForExchange)
+    {
+        $this->isForExchange = $isForExchange;
+
+        return $this;
+    }
+
+    /**
+     * Get isForExchange
+     *
+     * @return boolean
+     */
+    public function getIsForExchange()
+    {
+        return $this->isForExchange;
     }
 }

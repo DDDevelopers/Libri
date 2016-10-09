@@ -18,7 +18,7 @@ class Book
      */
     private $id;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank()
      */
     private $title;
@@ -52,6 +52,20 @@ class Book
      * @Assert\NotBlank()
      */
     private $publishedAt;
+    /**
+     * @var
+     * @ORM\Column(name="is_for_sale", type="boolean")
+     */
+    private $isForSale;
+    /**
+     * @var
+     * @ORM\Column(name="is_for_exchange", type="boolean")
+     */
+    private $isForExchange;
+    /**
+     * @ORM\Column(name="peaces_in_shelf", type="integer")
+     */
+    private $peacesInShelf;
 
     public function __construct()
     {
@@ -227,5 +241,77 @@ class Book
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set isForSale
+     *
+     * @param boolean $isForSale
+     *
+     * @return Book
+     */
+    public function setIsForSale($isForSale)
+    {
+        $this->isForSale = $isForSale;
+
+        return $this;
+    }
+
+    /**
+     * Get isForSale
+     *
+     * @return boolean
+     */
+    public function getIsForSale()
+    {
+        return $this->isForSale;
+    }
+
+    /**
+     * Set isForExchange
+     *
+     * @param boolean $isForExchange
+     *
+     * @return Book
+     */
+    public function setIsForExchange($isForExchange)
+    {
+        $this->isForExchange = $isForExchange;
+
+        return $this;
+    }
+
+    /**
+     * Get isForExchange
+     *
+     * @return boolean
+     */
+    public function getIsForExchange()
+    {
+        return $this->isForExchange;
+    }
+
+    /**
+     * Set peacesInShelf
+     *
+     * @param integer $peacesInShelf
+     *
+     * @return Book
+     */
+    public function setPeacesInShelf($peacesInShelf)
+    {
+        $this->peacesInShelf = $peacesInShelf;
+
+        return $this;
+    }
+
+    /**
+     * Get peacesInShelf
+     *
+     * @return integer
+     */
+    public function getPeacesInShelf()
+    {
+        return $this->peacesInShelf;
     }
 }

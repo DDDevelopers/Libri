@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diar
- * Date: 9/14/16
- * Time: 10:09 PM
- */
-
 namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorRepository")
  * @ORM\Table(name="author")
  */
 class Author
@@ -32,7 +25,7 @@ class Author
      */
     private $lastName;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $email;
     /**
@@ -184,6 +177,8 @@ class Author
     public function __construct()
     {
         $this->books = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
     }
 
     /**
@@ -218,5 +213,10 @@ class Author
     public function getBooks()
     {
         return $this->books;
+    }
+
+    public function __toString()
+    {
+        return $this->getFirstName();
     }
 }

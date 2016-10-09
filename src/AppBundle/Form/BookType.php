@@ -35,7 +35,10 @@ class BookType extends AbstractType
                     'data-date-format' => 'yyyy-mm-dd'
                 ],
                 'html5' => false
-            ]);
+            ])
+            ->add('isForSale')
+            ->add('isForExchange')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -10,12 +10,16 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @UniqueEntity(fields={"email"}, message="Looks like you already have an account.")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -25,14 +29,17 @@ class User
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $name;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $lastname;
     /**
-     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", unique=true)
      */
     private $username;
     /**
@@ -40,11 +47,12 @@ class User
      */
     private $password;
     /**
-     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", unique=true)
      */
     private $email;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $phone;
     /**
@@ -55,6 +63,37 @@ class User
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $roles = [];
+    private $plainPassword;
+
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->updatedAt = new \DateTime('now');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
 
     /**
      * Get id
@@ -257,4 +296,72 @@ class User
     {
         return $this->updatedAt;
     }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        if(!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        return $roles;
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
+    }
+
+
+
 }
