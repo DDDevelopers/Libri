@@ -56,16 +56,16 @@ class Book
      * @var
      * @ORM\Column(name="is_for_sale", type="boolean")
      */
-    private $isForSale;
+    private $isForSale = 0;
     /**
      * @var
      * @ORM\Column(name="is_for_exchange", type="boolean")
      */
-    private $isForExchange;
+    private $isForExchange = 0;
     /**
      * @ORM\Column(name="peaces_in_shelf", type="integer")
      */
-    private $peacesInShelf;
+    private $peacesInShelf = 0;
 
     public function __construct()
     {
