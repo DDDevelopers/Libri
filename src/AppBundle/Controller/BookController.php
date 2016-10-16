@@ -40,6 +40,19 @@ class BookController extends Controller
     }
 
     /**
+     * @param Book $book
+     * @Route("/book/{id}", name="view_the_book")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewAction(Book $book)
+    {
+        //this will show the book
+        return $this->render('AppBundle:book:book.html.twig', [
+            'book' => $book
+        ]);
+    }
+
+    /**
      * @Route("/book/{id}/edit", name="edit_the_book")
      */
     public function editAction(Request $request, Book $book)

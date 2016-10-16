@@ -11,7 +11,8 @@ class BookRepository extends EntityRepository
     public function searchAllBooks($query = null)
     {
         $q = $this->createQueryBuilder('book')
-            ->leftJoin('book.author', 'author');
+            ->leftJoin('book.author', 'author')
+            ->addSelect('author');
         if(!empty($query)) {
             $q->andWhere('author.lastName = :query OR author.firstName LIKE :query OR book.title LIKE :query')
                 ->setParameter('query', '%'.$query.'%');

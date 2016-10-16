@@ -18,10 +18,6 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $books = $em->getRepository('AppBundle:Book')->searchAllBooks($request->query->get('search'));
 
-        if(!$books){
-            throw new NotFoundHttpException('There is no books in there, try to load the fixtures !');
-        }
-
         // replace this example code with whatever you need
         return $this->render('AppBundle::dashboard.html.twig', [
             'books' => $books
