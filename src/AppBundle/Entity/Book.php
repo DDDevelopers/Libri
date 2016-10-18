@@ -66,6 +66,10 @@ class Book
      * @ORM\Column(name="peaces_in_shelf", type="integer")
      */
     private $peacesInShelf = 0;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="books")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -313,5 +317,29 @@ class Book
     public function getPeacesInShelf()
     {
         return $this->peacesInShelf;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Book
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

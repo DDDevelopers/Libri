@@ -3,6 +3,7 @@ namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class BookRepository extends EntityRepository
@@ -35,5 +36,16 @@ class BookRepository extends EntityRepository
             ->orderBy('book.title', 'ASC');
 
         return $q->getQuery()->getOneOrNullResult();
+    }
+
+    public function findUsersBooks(User $user)
+    {
+        return $this->createQueryBuilder('book')
+            ->leftJoin('book.author', 'author')
+            ->addSelect('author')
+            ->andWhere('book.user = :user')
+            ->setParameter('user', $user->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -24,8 +24,10 @@ class BookController extends Controller
             if($book = $em->getRepository('AppBundle:Book')->findBookByTitle($form->getData()->getTitle())) {
                 $book->setPeacesInShelf($book->getPeacesInShelf() + 1);
             }else{
+                /** @var Book $book */
                 $book = $form->getData();
                 $book->setPeacesInShelf(1);
+                $book->setUser($this->getUser());
             }
             $em->persist($book);
             $em->flush();
@@ -74,4 +76,6 @@ class BookController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+
 }

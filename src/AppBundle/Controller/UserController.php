@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Book;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -57,5 +58,18 @@ class UserController extends Controller
             'action' => $this->generateUrl($url, $options),
             'method' => 'POST'
         ])->add('save', SubmitType::class);
+    }
+
+    /**
+     * @Route("/books/added", name="my_added_books")
+     */
+    public function myAddedBooksAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $books = $em->getRepository(Book::class)->findUsersBooks($this->getUser());
+
+        return $this->render('AppBundle:user:my_books.html.twig', [
+            'books' => $books
+        ]);
     }
 }
