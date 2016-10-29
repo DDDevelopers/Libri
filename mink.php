@@ -11,10 +11,11 @@ $session = new Session($driver);
 $session->start();
 
 $session->visit('https://wikileaks.org/');
-echo "Status code: ".$session->getStatusCode()." \n";
 //Document Element
 $page = $session->getPage();
 $header = $page->find('css', '.text .title');
 echo "The header of the featured article is: ". $header->getText()."\n";
 
 echo "The link for the news it's ".$page->findLink('News')->getAttribute('href')."\n";
+
+$session->stop();

@@ -18,7 +18,7 @@ class Book
      */
     private $id;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank()
      */
     private $title;
@@ -56,16 +56,20 @@ class Book
      * @var
      * @ORM\Column(name="is_for_sale", type="boolean")
      */
-    private $isForSale = 1;
+    private $isForSale = 0;
     /**
      * @var
      * @ORM\Column(name="is_for_exchange", type="boolean")
      */
-    private $isForExchange = 1;
+    private $isForExchange = 0;
     /**
      * @ORM\Column(name="peaces_in_shelf", type="integer")
      */
-    private $peacesInShelf = 1;
+    private $peacesInShelf = 0;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="books")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -289,5 +293,29 @@ class Book
     public function getIsForExchange()
     {
         return $this->isForExchange;
+    }
+
+    /**
+     * Set peacesInShelf
+     *
+     * @param integer $peacesInShelf
+     *
+     * @return Book
+     */
+    public function setPeacesInShelf($peacesInShelf)
+    {
+        $this->peacesInShelf = $peacesInShelf;
+
+        return $this;
+    }
+
+    /**
+     * Get peacesInShelf
+     *
+     * @return integer
+     */
+    public function getPeacesInShelf()
+    {
+        return $this->peacesInShelf;
     }
 }
