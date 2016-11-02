@@ -3,9 +3,12 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\Review;
 use AppBundle\Form\BookType;
+use AppBundle\Form\ReviewType;
 use AppBundle\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -48,9 +51,14 @@ class BookController extends Controller
      */
     public function viewAction(Book $book)
     {
+        $reviewForm = $this->createForm(ReviewType::class, new Review(), [
+            'method' => 'post',
+            'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
+        ]);
         //this will show the book
         return $this->render('AppBundle:book:book.html.twig', [
-            'book' => $book
+            'book' => $book,
+            'reviewForm' => $reviewForm->createView()
         ]);
     }
 

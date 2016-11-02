@@ -16,4 +16,12 @@
             <a href="#" class="btn btn-default">{{ 'Exchange'|trans }}</a>
         </div>
     </div>
+    {{ form_start(reviewForm) }}
+        {{ form_row(reviewForm.rating) }}
+        {{ form_row(reviewForm.shelf) }}
+        {{ form_row(reviewForm.finishedReading) }}
+        {{ form_row(reviewForm.startedReading) }}
+        {{ form_row(reviewForm.review) }}
+        <button class="btn btn-default" type="submit">Submit</button>
+    {{ form_end(reviewForm) }}
 {% endblock %}
