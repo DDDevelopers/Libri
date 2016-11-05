@@ -56,7 +56,7 @@ class BookController extends Controller
             'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
         ]);
         //this will show the book
-        return $this->render('AppBundle:book:book.html.twig', [
+        return $this->render('@App/book/book.html.twig', [
             'book' => $book,
             'reviewForm' => $reviewForm->createView()
         ]);

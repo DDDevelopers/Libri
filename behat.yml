@@ -1,7 +1,7 @@
 default:
     extensions:
         Behat\MinkExtension:
-            base_url: http://localhost:8000
+            base_url: http://localhost/Libri/app_dev.php
             goutte: ~
             selenium2: ~
         Behat\Symfony2Extension: ~

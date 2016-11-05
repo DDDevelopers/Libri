@@ -1,0 +1,28 @@
+AppBundle\Entity\User:
+    user_{1..10}:
+        name: <name()>
+        lastname: <lastname()>
+        username: <username()>
+        email: <email()>
+        phone: <numberBetween(100,10000)>
+        plainPassword: <numberBetween(444444, 555555)>
+        createdAt: <dateTimeBetween("-200 days", "now")>
+        isActive: <boolean(75)>
+
+AppBundle\Entity\Author:
+    author_{1..50}:
+        firstname: <name()>
+        lastname: <lastname()>
+        email: <email()>
+        createdAt: <dateTimeBetween("-200 days", "now")>
+        updatedAt: <dateTimeBetween($createdAt, "now")>
+
+AppBundle\Entity\Book:
+    book_{1..200}:
+        title: <title()>
+        description: <text()>
+        pages: <numberBetween(200, 600)>
+        author: '@author_<numberBetween(1, 50)>'
+        createdAt: <dateTimeBetween("-200 days", "now")>
+        publishedAt: <dateTimeBetween("-400 days", "now")>
+        updatedAt: <dateTimeBetween($createdAt, "now")>
