@@ -24,4 +24,10 @@
         {{ form_row(reviewForm.review) }}
         <button class="btn btn-default" type="submit">Submit</button>
     {{ form_end(reviewForm) }}
+    <div class="col-md-12">
+        <h3>Reviews by others</h3>
+        {% for review in book.reviews %}
+            
+        {% endfor %}
+    </div>
 {% endblock %}
