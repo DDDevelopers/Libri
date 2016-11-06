@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Controller\Api;
+header("Content-Type: application/json;charset=utf-8");
 
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Author;
 use JMS\Serializer\Serializer;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -9,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class AuthorController extends Controller
+class AuthorController extends BaseController
 {
 
     /**
@@ -29,10 +31,10 @@ class AuthorController extends Controller
         $authors = $em->getRepository(Author::class)->findAll();
 
         if(!$authors) {
-            return new JsonResponse('No author found');
+            return new JsonResponse(['error' => 'No authors found !'], 500);
         }
 
-        return new JsonResponse($authors);
+        return $this->createApiResponse($authors);
     }
 
     /**
@@ -60,9 +62,17 @@ class AuthorController extends Controller
      *  resource=true,
      * )
      */
-    public function oneAction()
+    public function oneAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
 
+        $author = $em->getRepository(Author::class)->find($id);
+
+        if(!$author) {
+            return new JsonResponse(['error' => 'No author found !'], 500);
+        }
+
+        return $this->createApiResponse($author);
     }
 
 }

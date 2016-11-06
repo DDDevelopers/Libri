@@ -19,7 +19,6 @@ class Author
     private $id;
     /**
      * @ORM\Column(type="string")
-     * @Serializer\Exclude()
      */
     private $firstName;
     /**
