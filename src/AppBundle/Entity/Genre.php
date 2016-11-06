@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diar
- * Date: 9/17/16
- * Time: 8:11 PM
- */
-
 namespace AppBundle\Entity;
 
 

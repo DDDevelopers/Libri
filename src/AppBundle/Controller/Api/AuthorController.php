@@ -4,11 +4,9 @@ header("Content-Type: application/json;charset=utf-8");
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Author;
-use JMS\Serializer\Serializer;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthorController extends BaseController
