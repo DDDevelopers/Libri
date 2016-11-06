@@ -4,6 +4,8 @@ namespace AppBundle\Controller\Web;
 
 use AppBundle\Entity\Book;
 use AppBundle\Entity\Review;
+use AppBundle\Entity\UserBookShelf;
+use AppBundle\Form\BookToShelfType;
 use AppBundle\Form\BookType;
 use AppBundle\Form\ReviewType;
 use AppBundle\Repository\BookRepository;
@@ -51,6 +53,10 @@ class BookController extends Controller
      */
     public function viewAction(Book $book)
     {
+        $addToShelfForm = $this->createForm(BookToShelfType::class, new UserBookShelf(), [
+            'action' => $this->generateUrl('save_book_in_shelf', ['id' => $book->getId()]),
+            'method' => 'post'
+        ]);
         $reviewForm = $this->createForm(ReviewType::class, new Review(), [
             'method' => 'post',
             'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
@@ -58,7 +64,8 @@ class BookController extends Controller
         //this will show the book
         return $this->render('@App/book/book.html.twig', [
             'book' => $book,
-            'reviewForm' => $reviewForm->createView()
+            'reviewForm' => $reviewForm->createView(),
+            'shelfForm' => $addToShelfForm->createView()
         ]);
     }
 

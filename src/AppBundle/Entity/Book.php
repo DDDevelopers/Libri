@@ -71,6 +71,10 @@ class Book
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="book")
      */
     private $reviews;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserBookShelf", mappedBy="book")
+     */
+    private $usersShelfed;
 
     public function __construct()
     {
@@ -352,5 +356,39 @@ class Book
     public function getReviews()
     {
         return $this->reviews;
+    }
+
+    /**
+     * Add usersShelfed
+     *
+     * @param \AppBundle\Entity\UserBookShelf $usersShelfed
+     *
+     * @return Book
+     */
+    public function addUsersShelfed(\AppBundle\Entity\UserBookShelf $usersShelfed)
+    {
+        $this->usersShelfed[] = $usersShelfed;
+
+        return $this;
+    }
+
+    /**
+     * Remove usersShelfed
+     *
+     * @param \AppBundle\Entity\UserBookShelf $usersShelfed
+     */
+    public function removeUsersShelfed(\AppBundle\Entity\UserBookShelf $usersShelfed)
+    {
+        $this->usersShelfed->removeElement($usersShelfed);
+    }
+
+    /**
+     * Get usersShelfed
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsersShelfed()
+    {
+        return $this->usersShelfed;
     }
 }

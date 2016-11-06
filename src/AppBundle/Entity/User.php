@@ -74,6 +74,12 @@ class User implements UserInterface, \Serializable
     private $roles = [];
     private $plainPassword;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserBookShelf", mappedBy="user")
+     */
+    private $shelfedBooks;
+
+
     public function __construct()
     {
         $this->isActive = true;
@@ -361,5 +367,39 @@ class User implements UserInterface, \Serializable
     {
         $this->plainPassword = $plainPassword;
         $this->password = null;
+    }
+
+    /**
+     * Add shelfedBook
+     *
+     * @param \AppBundle\Entity\UserBookShelf $shelfedBook
+     *
+     * @return User
+     */
+    public function addShelfedBook(\AppBundle\Entity\UserBookShelf $shelfedBook)
+    {
+        $this->shelfedBooks[] = $shelfedBook;
+
+        return $this;
+    }
+
+    /**
+     * Remove shelfedBook
+     *
+     * @param \AppBundle\Entity\UserBookShelf $shelfedBook
+     */
+    public function removeShelfedBook(\AppBundle\Entity\UserBookShelf $shelfedBook)
+    {
+        $this->shelfedBooks->removeElement($shelfedBook);
+    }
+
+    /**
+     * Get shelfedBooks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getShelfedBooks()
+    {
+        return $this->shelfedBooks;
     }
 }
