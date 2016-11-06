@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorRepository")
@@ -18,6 +19,7 @@ class Author
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Exclude()
      */
     private $firstName;
     /**
@@ -39,6 +41,7 @@ class Author
     /**
      * @var
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Book", mappedBy="author")
+     * @Serializer\Exclude()
      */
     private $books;
 
