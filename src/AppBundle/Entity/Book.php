@@ -68,10 +68,6 @@ class Book
      */
     private $peacesInShelf = 0;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="books")
-     */
-    private $user;
-    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="book")
      */
     private $reviews;
@@ -324,31 +320,6 @@ class Book
     {
         return $this->peacesInShelf;
     }
-
-    /**
-     * Set user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return Book
-     */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
     /**
      * Add review
      *

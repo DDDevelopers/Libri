@@ -14,3 +14,4 @@ var/sessions/dev/
 var/sessions/prod/
 vendor/
 web/bundles/framework
+web/bundles/nelmioapidoc
