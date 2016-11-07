@@ -74,6 +74,16 @@ class User implements UserInterface, \Serializable
     private $roles = [];
     private $plainPassword;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserBookShelf", mappedBy="user")
+     */
+    private $shelfedBooks;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
+
+
     public function __construct()
     {
         $this->isActive = true;
@@ -361,5 +371,73 @@ class User implements UserInterface, \Serializable
     {
         $this->plainPassword = $plainPassword;
         $this->password = null;
+    }
+
+    /**
+     * Add shelfedBook
+     *
+     * @param \AppBundle\Entity\UserBookShelf $shelfedBook
+     *
+     * @return User
+     */
+    public function addShelfedBook(\AppBundle\Entity\UserBookShelf $shelfedBook)
+    {
+        $this->shelfedBooks[] = $shelfedBook;
+
+        return $this;
+    }
+
+    /**
+     * Remove shelfedBook
+     *
+     * @param \AppBundle\Entity\UserBookShelf $shelfedBook
+     */
+    public function removeShelfedBook(\AppBundle\Entity\UserBookShelf $shelfedBook)
+    {
+        $this->shelfedBooks->removeElement($shelfedBook);
+    }
+
+    /**
+     * Get shelfedBooks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getShelfedBooks()
+    {
+        return $this->shelfedBooks;
+    }
+
+    /**
+     * Add review
+     *
+     * @param \AppBundle\Entity\Review $review
+     *
+     * @return User
+     */
+    public function addReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \AppBundle\Entity\Review $review
+     */
+    public function removeReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 }

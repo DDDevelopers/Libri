@@ -4,7 +4,10 @@ namespace AppBundle\Controller\Web;
 
 use AppBundle\Entity\Book;
 use AppBundle\Entity\Review;
+use AppBundle\Entity\UserBookShelf;
+use AppBundle\Form\BookToShelfType;
 use AppBundle\Form\BookType;
+use AppBundle\Form\RateType;
 use AppBundle\Form\ReviewType;
 use AppBundle\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,16 +25,9 @@ class BookController extends Controller
         $form = $this->createForm(BookType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            if($book = $em->getRepository('AppBundle:Book')->findBookByTitle($form->getData()->getTitle())) {
-                $book->setPeacesInShelf($book->getPeacesInShelf() + 1);
-            }else{
-                /** @var Book $book */
-                $book = $form->getData();
-                $book->setPeacesInShelf(1);
-                $book->setUser($this->getUser());
-            }
+            $book = $form->getData();
             $em->persist($book);
             $em->flush();
 
@@ -51,14 +47,42 @@ class BookController extends Controller
      */
     public function viewAction(Book $book)
     {
-        $reviewForm = $this->createForm(ReviewType::class, new Review(), [
+        $em = $this->getDoctrine()->getManager();
+
+        $addToShelfForm = $this->createForm(BookToShelfType::class, $em->getRepository(UserBookShelf::class)->findOneBy([
+            'user' => $this->getUser()->getId(),
+            'book' => $book->getId()
+        ]), [
+            'action' => $this->generateUrl('save_book_in_shelf', ['id' => $book->getId()]),
+            'method' => 'post'
+        ]);
+
+        $rate = $em->getRepository(Review::class)->findOneBy([
+            'book' => $book->getId(),
+            'user' => $this->getUser()->getId()
+        ]);
+
+        if(!$rate) {
+            $rate = new Review();
+        }
+
+
+        $rateForm = $this->createForm(RateType::class, $rate, [
+            'method' => 'post',
+            'action' => $this->generateUrl('rate_the_book', ['id' => $book->getId()])
+        ])
+            ->add('submit', SubmitType::class);
+
+        $reviewForm = $this->createForm(ReviewType::class, $rate, [
             'method' => 'post',
             'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
         ]);
         //this will show the book
         return $this->render('@App/book/book.html.twig', [
             'book' => $book,
-            'reviewForm' => $reviewForm->createView()
+            'reviewForm' => $reviewForm->createView(),
+            'shelfForm' => $addToShelfForm->createView(),
+            'rateForm' => $rateForm->createView()
         ]);
     }
 
@@ -70,7 +94,7 @@ class BookController extends Controller
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $book = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($book);

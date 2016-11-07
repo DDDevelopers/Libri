@@ -14,6 +14,4 @@ Just clone the app to your working location
 6. Go to the [Libri App](http://localhost:8000/) <br>
 
 - You can access the api documentation by going to `/api/v1/doc`
-
-
-
+- Join the board to see the Issues [Board](https://waffle.io/DDDevelopers/Libri/join)
