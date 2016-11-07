@@ -78,6 +78,10 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserBookShelf", mappedBy="user")
      */
     private $shelfedBooks;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
 
 
     public function __construct()
@@ -401,5 +405,39 @@ class User implements UserInterface, \Serializable
     public function getShelfedBooks()
     {
         return $this->shelfedBooks;
+    }
+
+    /**
+     * Add review
+     *
+     * @param \AppBundle\Entity\Review $review
+     *
+     * @return User
+     */
+    public function addReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \AppBundle\Entity\Review $review
+     */
+    public function removeReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 }

@@ -16,11 +16,20 @@ class ShelfController extends Controller
      */
     public function createAction(Request $request, Book $book)
     {
-        $bookToShelf = new UserBookShelf();
+        $em = $this->getDoctrine()->getManager();
+        $bookToShelf = $em->getRepository(UserBookShelf::class)->findOneBy([
+            'book' => $book->getId(),
+            'user' => $this->getUser()->getId()
+        ]);
+        //if there is no row then create new one
+        if(!$bookToShelf) {
+            $bookToShelf = new UserBookShelf();
+        }
+
         $form = $this->createForm(BookToShelfType::class, $bookToShelf);
         $form->handleRequest($request);
+
         if($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $bookToShelf->setUser($this->getUser());
             $bookToShelf->setBook($book);
             $em->persist($bookToShelf);

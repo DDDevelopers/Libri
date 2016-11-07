@@ -7,6 +7,7 @@ use AppBundle\Entity\Review;
 use AppBundle\Entity\UserBookShelf;
 use AppBundle\Form\BookToShelfType;
 use AppBundle\Form\BookType;
+use AppBundle\Form\RateType;
 use AppBundle\Form\ReviewType;
 use AppBundle\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -47,6 +48,7 @@ class BookController extends Controller
     public function viewAction(Book $book)
     {
         $em = $this->getDoctrine()->getManager();
+
         $addToShelfForm = $this->createForm(BookToShelfType::class, $em->getRepository(UserBookShelf::class)->findOneBy([
             'user' => $this->getUser()->getId(),
             'book' => $book->getId()
@@ -54,7 +56,24 @@ class BookController extends Controller
             'action' => $this->generateUrl('save_book_in_shelf', ['id' => $book->getId()]),
             'method' => 'post'
         ]);
-        $reviewForm = $this->createForm(ReviewType::class, new Review(), [
+
+        $rate = $em->getRepository(Review::class)->findOneBy([
+            'book' => $book->getId(),
+            'user' => $this->getUser()->getId()
+        ]);
+
+        if(!$rate) {
+            $rate = new Review();
+        }
+
+
+        $rateForm = $this->createForm(RateType::class, $rate, [
+            'method' => 'post',
+            'action' => $this->generateUrl('rate_the_book', ['id' => $book->getId()])
+        ])
+            ->add('submit', SubmitType::class);
+
+        $reviewForm = $this->createForm(ReviewType::class, $rate, [
             'method' => 'post',
             'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
         ]);
@@ -62,7 +81,8 @@ class BookController extends Controller
         return $this->render('@App/book/book.html.twig', [
             'book' => $book,
             'reviewForm' => $reviewForm->createView(),
-            'shelfForm' => $addToShelfForm->createView()
+            'shelfForm' => $addToShelfForm->createView(),
+            'rateForm' => $rateForm->createView()
         ]);
     }
 
