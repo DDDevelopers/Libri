@@ -1,30 +1,29 @@
-/*
-	Ratings Stars
-	(with as little code as possible)
-*/
-#rate_rating > .radio > label > input[type=radio] { display: none}
-
 #rate_rating {
-    direction: rtl;
-    text-align: center;
-    font-weight: bold;
+    border: none;
+    float: left;
 }
-#rate_rating > .radio {
+
+#rate_rating > .radio > label > input { display: none; }
+#rate_rating > .radio > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
     display: inline-block;
-    width: 10px;
-    position: relative;
-}
-#rate_rating > .radio:hover,
-#rate_rating > .radio:hover ~ .radio {
-    color: rgba(169, 148, 148, 0.89);
-}
-#rate_rating > .radio:hover:before,
-#rate_rating > .radio:hover ~ .radio:before {
-    content: "\2605";
-    position: absolute;
-    left: 0;
-    color: gold;
+    content: "\f005";
 }
 
+#rate_rating > .radio > label {
+    color: #ddd;
+    float: right;
+}
 
+/***** CSS Magic to Highlight Stars on Hover *****/
 
+#rate_rating > .radio > label > input:checked ~ label, /* show gold star when clicked */
+#rate_rating > .radio > label > input:not(:checked) > #rate_rating > .radio > label:hover, /* hover current star */
+#rate_rating > .radio > label > input:not(:checked) > #rate_rating > .radio > label:hover ~ label { color: #FFD700 !important;   } /* hover previous stars in list */
+
+#rate_rating > .radio > label > input:checked + #rate_rating > .radio > label:hover, /* hover current star when changing rating */
+#rate_rating > .radio > label > #rate_rating > .radio > label > input:checked ~ label:hover,
+#rate_rating > .radio > label:hover ~ #rate_rating > .radio > label > input:checked ~ label, /* lighten current selection */
+#rate_rating > .radio > label > input:checked ~ #rate_rating > .radio > label:hover ~ label { color: #FFED85;  } 

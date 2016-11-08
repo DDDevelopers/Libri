@@ -16,10 +16,8 @@
             {{ form_end(shelfForm) }}
         </div>
         <div class="col-md-4">
+            {% form_theme rateForm _self %}
             {{ form_start(rateForm) }}
-                {% for star in rateForm.iterator %}
-                    {{ form_widget(star) }}
-                {% endfor %}
             {{ form_end(rateForm) }}
             <a href="{{ path('remove_the_review_from_the_book', {id: book.id}) }}">Remove review</a>
         </div>

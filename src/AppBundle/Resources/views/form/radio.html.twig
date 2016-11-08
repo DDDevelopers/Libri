@@ -1,0 +1,6 @@
+{% block _rate_rating_widget %}
+    {% for rate in rateForm.rating %}
+        {{ form_widget(rate) }}
+        {{ form_label(rate) }}
+    {% endfor %}
+{% endblock %}
