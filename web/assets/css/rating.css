@@ -1,0 +1,30 @@
+/*
+	Ratings Stars
+	(with as little code as possible)
+*/
+#rate_rating > .radio > label > input[type=radio] { display: none}
+
+#rate_rating {
+    direction: rtl;
+    text-align: center;
+    font-weight: bold;
+}
+#rate_rating > .radio {
+    display: inline-block;
+    width: 10px;
+    position: relative;
+}
+#rate_rating > .radio:hover,
+#rate_rating > .radio:hover ~ .radio {
+    color: rgba(169, 148, 148, 0.89);
+}
+#rate_rating > .radio:hover:before,
+#rate_rating > .radio:hover ~ .radio:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: gold;
+}
+
+
+

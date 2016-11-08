@@ -17,6 +17,9 @@
         </div>
         <div class="col-md-4">
             {{ form_start(rateForm) }}
+                {% for star in rateForm.iterator %}
+                    {{ form_widget(star) }}
+                {% endfor %}
             {{ form_end(rateForm) }}
             <a href="{{ path('remove_the_review_from_the_book', {id: book.id}) }}">Remove review</a>
         </div>
@@ -32,7 +35,7 @@
     <div class="col-md-12">
         <h3>Reviews by others</h3>
         {% for review in book.reviews %}
-            
+
         {% endfor %}
     </div>
 {% endblock %}
