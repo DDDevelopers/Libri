@@ -17,6 +17,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $books = $em->getRepository('AppBundle:Book')->searchAllBooks($request->query->get('search'));
+        
         // replace this example code with whatever you need
         return $this->render('@App/dashboard.html.twig', [
             'books' => $books

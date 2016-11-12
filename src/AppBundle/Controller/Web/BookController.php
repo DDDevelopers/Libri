@@ -62,7 +62,16 @@ class BookController extends Controller
             'user' => $this->getUser()->getId()
         ]);
 
-        if(!$rate) {
+        $reviewForm = $this->createForm(
+            ReviewType::class,
+            $em->getRepository('AppBundle:Review')->findOneBy(
+                ['book' => $book->getId(), 'user' => $this->getUser()->getId()]
+            ), [
+                'method' => 'post',
+                'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
+            ]);
+
+        if (!$rate) {
             $rate = new Review();
         }
 
@@ -73,10 +82,6 @@ class BookController extends Controller
         ])
             ->add('submit', SubmitType::class);
 
-        $reviewForm = $this->createForm(ReviewType::class, $rate, [
-            'method' => 'post',
-            'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
-        ]);
         //this will show the book
         return $this->render('@App/book/book.html.twig', [
             'book' => $book,

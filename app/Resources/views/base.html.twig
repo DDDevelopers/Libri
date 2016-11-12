@@ -9,28 +9,60 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-theme.min.css') }}">
+        {#<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-theme.min.css') }}">#}
         <link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.css') }}">
+        <link rel="stylesheet"
+              href="{{ asset('assets/node_modules/jquery-bar-rating/dist/themes/fontawesome-stars.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/rating.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
     {% endblock %}
 </head>
 <body>
-{{ include('navigation.html.twig') }}
-<div class="container">
-    {% for msg in app.session.flashBag.get('success') %}
-        <div class="alert-success">{{ msg }}</div>
-    {% endfor %}
-    {% for msg in app.session.flashBag.get('error') %}
-        <div class="alert-error">{{ msg }}</div>
-    {% endfor %}
-    {% block body %} {% endblock %}
+<div class="app" id="app">
+    <!-- content -->
+    <div id="content" class="app-content box-shadow-z1" role="main">
+        <div class="app-header white box-shadow">
+            {{ include('navigation.html.twig') }}
+        </div>
+        <div class="app-footer">
+            asdasdasd
+        </div>
+        <div ui-view class="app-body" id="view">
+            <!-- ############ PAGE START-->
+            {% block body %} {% endblock %}
+            <!-- ############ PAGE END-->
+        </div>
+    </div>
+    <!-- content -->
 </div>
 {% block scripts %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="{{ asset('assets/node_modules/jquery-bar-rating/examples/js/vendor/jquery-1.11.2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/tether.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+    <script src="{{ asset('assets/bower_components/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/js/underscore-min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.storageapi.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
+    <script src="{{ asset('assets/js/config.lazyload.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/jquery-bar-rating/jquery.barrating.js') }}"></script>
+    <script src="{{ asset('assets/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/js/userInformation.js') }}"></script>
+
+    <script src="{{ asset('assets/js/palette.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-load.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-jp.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-include.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-device.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-form.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-nav.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-screenfull.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-scroll-to.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-toggle-class.js') }}"></script>
+
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.pjax.js') }}"></script>
+    <script src="{{ asset('assets/js/ajax.js') }}"></script>
 {% endblock %}
 </body>
 </html>

@@ -16,24 +16,34 @@ class ReviewController extends Controller
 
     /**
      * @param Request $request
-     * @Route("/insert/{id}", name="insert_new_review")
+     * @Route("/review/update/{id}", name="insert_new_review")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function insertAction(Request $request, Book $book)
     {
-        $form = $this->createForm(ReviewType::class);
+        $em = $this->getDoctrine()->getManager();
+
+        $review = $em->getRepository(Review::class)->findOneBy([
+            'book' => $book->getId(),
+            'user' => $this->getUser()->getId()
+        ]);
+
+        if(!$review) {
+            $review = new Review();
+        }
+
+        $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $review = $form->getData();
             $review->setBook($book);
-            $em->persist($book);
+            $review->setUser($this->getUser());
+            $em->persist($review);
             $em->flush();
-
             $this->addFlash('success', 'Hej, thanks for the review.');
         } else {
             $this->addFlash('error', 'Hmmm, something wasn\'t right !');
         }
+
         return $this->redirectToRoute('view_the_book', ['id' => $book->getId()]);
     }
 
@@ -55,7 +65,7 @@ class ReviewController extends Controller
             $rate = new Review();
         }
 
-        $form = $this->createForm(RateType::class, $rate)->add('submit', SubmitType::class);
+        $form = $this->createForm(RateType::class, $rate);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

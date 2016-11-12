@@ -20,8 +20,11 @@ class RateType extends AbstractType
                 4 => '4',
                 5 => '5',
             ],
-            'expanded' => true,
-            'required' => true
+            'expanded' => false,
+            'required' => true,
+            'attr' => [
+                'class' => 'make_rating_beautiful'
+            ]
         ]);
     }
 
