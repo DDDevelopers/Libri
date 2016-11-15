@@ -76,6 +76,25 @@ class Book
      */
     private $usersShelfed;
 
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please add a cover for this book.")
+     */
+    private $cover;
+
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();

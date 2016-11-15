@@ -16,3 +16,6 @@ vendor/
 web/bundles/framework
 web/bundles/nelmioapidoc
 *.php~
+*.svg
+web/assets/img/1479093506_ilustracoes_04-10.png
+*.jpg

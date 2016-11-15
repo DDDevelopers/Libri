@@ -2,11 +2,10 @@
 
 namespace AppBundle\Controller\Web;
 
-use AppBundle\Form\LoginType;
+use AppBundle\Entity\Book;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
@@ -16,7 +15,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $books = $em->getRepository('AppBundle:Book')->searchAllBooks($request->query->get('search'));
+        $books = $em->getRepository(Book::class)->searchAllBooks($request->query->get('search'));
         
         // replace this example code with whatever you need
         return $this->render('@App/dashboard.html.twig', [

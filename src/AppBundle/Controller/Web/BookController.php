@@ -28,6 +28,23 @@ class BookController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $book = $form->getData();
+
+            // $file stores the uploaded PDF file
+            $file = $book->getCover();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.jpg';
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('covers_directory'),
+                $fileName
+            );
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $book->setCover($fileName);
+
             $em->persist($book);
             $em->flush();
 

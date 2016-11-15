@@ -23,6 +23,15 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/me", name="my_profile")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function profileAction()
+    {
+        return $this->render('@App/user/profile.html.twig', []);
+    }
+
+    /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/register", name="register_user")

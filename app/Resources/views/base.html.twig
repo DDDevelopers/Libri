@@ -1,68 +1,84 @@
-<!doctype html>
-<html class="no-js" lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-        {#<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-theme.min.css') }}">#}
-        <link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.css') }}">
-        <link rel="stylesheet"
-              href="{{ asset('assets/node_modules/jquery-bar-rating/dist/themes/fontawesome-stars.css') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Bootstrap Admin Template</title>
+    {% block stylesheet %}
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{{ asset('assets/css/profileMenu.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/rating.css') }}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.css') }}" rel="stylesheet"
+              type="text/css">
+        <link href="{{ asset('assets/node_modules/jquery-bar-rating/dist/themes/fontawesome-stars.css') }}"
+              rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{ asset('assets/css/rating.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
+
     {% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
+
 <body>
-<div class="app" id="app">
-    <!-- content -->
-    <div id="content" class="app-content box-shadow-z1" role="main">
-        <div class="app-header white box-shadow">
-            {{ include('navigation.html.twig') }}
-        </div>
-        <div class="app-footer">
-            asdasdasd
-        </div>
-        <div ui-view class="app-body" id="view">
-            <!-- ############ PAGE START-->
-            {% block body %} {% endblock %}
-            <!-- ############ PAGE END-->
-        </div>
+
+<div id="">
+    <!-- Navigation -->
+    {{ include('navigation.html.twig') }}
+
+    <div class="container">
+
+        {% block body %}
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        Blank Page
+                        <small>Subheading</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i> <a href="index.html">Dashboard</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-file"></i> Blank Page
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+        {% endblock %}
     </div>
-    <!-- content -->
+    <!-- /.container-fluid -->
+
 </div>
+<!-- /#page-wrapper -->
+
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="{{ asset('assets/bower_components/jquery/dist/jquery.js') }}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
 {% block scripts %}
-    <script src="{{ asset('assets/node_modules/jquery-bar-rating/examples/js/vendor/jquery-1.11.2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/tether.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/bower_components/moment/moment.js') }}"></script>
-    <script src="{{ asset('assets/js/underscore-min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.storageapi.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
-    <script src="{{ asset('assets/js/config.lazyload.js') }}"></script>
-    <script src="{{ asset('assets/node_modules/jquery-bar-rating/jquery.barrating.js') }}"></script>
-    <script src="{{ asset('assets/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/jquery-bar-rating/dist/jquery.barrating.min.js') }}"></script>
 
-    <script src="{{ asset('assets/js/palette.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-load.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-jp.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-include.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-device.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-form.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-nav.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-screenfull.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-scroll-to.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-toggle-class.js') }}"></script>
-
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.pjax.js') }}"></script>
-    <script src="{{ asset('assets/js/ajax.js') }}"></script>
 {% endblock %}
 </body>
+
 </html>

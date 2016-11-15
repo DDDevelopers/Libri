@@ -3,8 +3,9 @@
 {% block body %}
     <div class="row">
         <div class="col-md-4">
-            <img src="http://www.brochure-designing.net/large/Book%20Cover%20Design_BR1120_101.jpg"
-                 class="img-responsive img-rounded" alt="The book image">
+            <img {% if book.cover is not null %}src="{{ asset('uploads/covers/' ~ book.cover) }}"{% else %}
+                    src="http://www.brochure-designing.net/large/Book%20Cover%20Design_BR1120_101.jpg"{% endif %}
+                  class="img-responsive img-rounded" alt="The book image">
         </div>
         <div class="col-md-8">
             <h1>{{ book.title }}</h1>
