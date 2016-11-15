@@ -3,6 +3,7 @@ namespace AppBundle\Controller\Web;
 
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\Timeline;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,7 +29,15 @@ class UserController extends Controller
      */
     public function profileAction()
     {
-        return $this->render('@App/user/profile.html.twig', []);
+        $em = $this->getDoctrine()->getManager();
+
+        $timeline = $em->getRepository(Timeline::class)->findBy([
+            'userId' => $this->getUser()->getId()
+        ]);
+
+        return $this->render('@App/user/profile.html.twig', [
+            'timeline' => $timeline
+        ]);
     }
 
     /**

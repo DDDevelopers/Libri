@@ -20,3 +20,7 @@ services:
         public: false
         tags:
             - { name: serializer.normalizer }
+    app.timeline_subscriber:
+            class: AppBundle\Services\TimelineLogger
+            tags:
+                - { name: doctrine.event_subscriber, connection: default }

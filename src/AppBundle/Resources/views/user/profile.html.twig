@@ -64,15 +64,17 @@ Licensed under MIT
             </div>
             <div class="col-md-9">
                 <div class="profile-content">
-                    <h3>Timeline</h3>
+                    <h2>{{ 'Timeline'|trans }}</h2>
                     <ul class="timeline">
-                        <li>
-                            <p class="timeline-date">{{ '1992-03-16'|date('m.d.Y') }}</p>
-                            <div class="timeline-content">
-                                <h3>{{ 'Title' }}</h3>
-                                <p>{{ 'content as' }}</p>
-                            </div>
-                        </li>
+                        {% for event in timeline %}
+                            <li>
+                                <p class="timeline-date">{{ event.createdAt|date('H:i:s') }}</p>
+                                <div class="timeline-content">
+                                    <h3>{{ event.parentId }}</h3>
+                                    <p>{{ event.description }}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
