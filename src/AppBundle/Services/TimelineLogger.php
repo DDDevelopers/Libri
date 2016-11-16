@@ -33,11 +33,11 @@ class TimelineLogger implements EventSubscriber
         // for now I am logging only the review for the book
         if ($entity instanceof Review) {
             $em = $args->getEntityManager();
-
             $timeline = new Timeline();
-            $timeline->setDescription('You reviewed this book');
+            $timeline->setTitle('Book review');
+            $timeline->setDescription($entity->getReview());
             $timeline->setTable('Review');
-            $timeline->setParentId($entity->getId());
+            $timeline->setParentId($entity->getBook()->getId());
             $timeline->setLink('no link');
             $timeline->setUserId($entity->getUser()->getId());
 

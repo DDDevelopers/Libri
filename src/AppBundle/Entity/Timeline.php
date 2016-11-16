@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TimelineRepository")
  * @ORM\Table(name="timeline")
  */
 class Timeline
@@ -24,6 +24,10 @@ class Timeline
      * @ORM\Column(type="integer")
      */
     private $parentId;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $title;
     /**
      * @ORM\Column(type="string")
      */
@@ -151,6 +155,21 @@ class Timeline
         $this->userId = $userId;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 
 
 }

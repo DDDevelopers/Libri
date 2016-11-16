@@ -31,9 +31,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $timeline = $em->getRepository(Timeline::class)->findBy([
-            'userId' => $this->getUser()->getId()
-        ]);
+        $timeline = $em->getRepository(Timeline::class)->getAllAndOrderByLatest();
 
         return $this->render('@App/user/profile.html.twig', [
             'timeline' => $timeline

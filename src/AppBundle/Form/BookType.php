@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Author;
 use AppBundle\Entity\Book;
+use AppBundle\Entity\Category;
 use AppBundle\Repository\AuthorRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,6 +27,11 @@ class BookType extends AbstractType
                     return $repo->createAlphabeticalQueryBuilder();
                 },
                 'placeholder' => 'Choose the Author'
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'title',
+                'choice_value' => 'id'
             ])
             ->add('description', TextareaType::class)
             ->add('pages')

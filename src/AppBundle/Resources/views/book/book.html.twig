@@ -3,8 +3,8 @@
 {% block body %}
     <div class="row">
         <div class="col-md-4">
-            <img {% if book.cover is not null %}src="{{ asset('uploads/covers/' ~ book.cover) }}"{% else %}
-                    src="http://www.brochure-designing.net/large/Book%20Cover%20Design_BR1120_101.jpg"{% endif %}
+            <img {% if book.cover is not defined %}src="{{ asset('uploads/covers/' ~ book.cover) }}"{% else %}
+                    src="{{ asset('uploads/covers/aba-06.png') }}"{% endif %}
                   class="img-responsive img-rounded" alt="The book image">
         </div>
         <div class="col-md-8">
@@ -66,10 +66,10 @@
         <p>Here will be the reviews by others but not yours and more info, will be redesigned also !</p>
         <div class="well">
             {% for feedback in book.reviews %}
-                <div class="row">
+                <div class="row" id="review{{ feedback.user.id }}">
                     <div class="col-md-12">
-                        {% for i in 0..4 %}
-                            {% if i <= feedback.review %}
+                        {% for i in 1..5 %}
+                            {% if i <= feedback.rating %}
                                 <span class="glyphicon glyphicon-star"></span>
                             {% else %}
                                 <span class="glyphicon glyphicon-star-empty"></span>
