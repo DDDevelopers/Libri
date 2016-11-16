@@ -24,10 +24,6 @@ class Review
      */
     private $review;
     /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $shelf;
-    /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $startedReading;
@@ -54,7 +50,7 @@ class Review
 
     public function __construct()
     {
-        if(!$this->getCreatedAt()) {
+        if (!$this->getCreatedAt()) {
             $this->createdAt = new \DateTime();
         }
         $this->updatedAt = new \DateTime();
@@ -119,30 +115,6 @@ class Review
     }
 
     /**
-     * Set shelf
-     *
-     * @param string $shelf
-     *
-     * @return Review
-     */
-    public function setShelf($shelf)
-    {
-        $this->shelf = $shelf;
-
-        return $this;
-    }
-
-    /**
-     * Get shelf
-     *
-     * @return string
-     */
-    public function getShelf()
-    {
-        return $this->shelf;
-    }
-
-    /**
      * Set startedReading
      *
      * @param \DateTime $startedReading
@@ -151,8 +123,7 @@ class Review
      */
     public function setStartedReading($startedReading)
     {
-        $this->startedReading = $startedReading;
-
+        $this->startedReading = \DateTime::createFromFormat('d.m.Y', $startedReading);
         return $this;
     }
 
@@ -163,6 +134,9 @@ class Review
      */
     public function getStartedReading()
     {
+        if(is_object($this->startedReading)){
+            return ($this->startedReading)->format('d.m.Y');
+        }
         return $this->startedReading;
     }
 
@@ -175,7 +149,7 @@ class Review
      */
     public function setFinishedReading($finishedReading)
     {
-        $this->finishedReading = $finishedReading;
+        $this->finishedReading = \DateTime::createFromFormat('d.m.Y', $finishedReading);
 
         return $this;
     }
@@ -187,6 +161,9 @@ class Review
      */
     public function getFinishedReading()
     {
+        if(is_object($this->finishedReading)){
+            return ($this->finishedReading)->format('d.m.Y');
+        }
         return $this->finishedReading;
     }
 

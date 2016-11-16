@@ -28,6 +28,23 @@ class BookController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $book = $form->getData();
+
+            // $file stores the uploaded PDF file
+            $file = $book->getCover();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.jpg';
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('covers_directory'),
+                $fileName
+            );
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $book->setCover($fileName);
+
             $em->persist($book);
             $em->flush();
 
@@ -62,7 +79,16 @@ class BookController extends Controller
             'user' => $this->getUser()->getId()
         ]);
 
-        if(!$rate) {
+        $reviewForm = $this->createForm(
+            ReviewType::class,
+            $em->getRepository('AppBundle:Review')->findOneBy(
+                ['book' => $book->getId(), 'user' => $this->getUser()->getId()]
+            ), [
+                'method' => 'post',
+                'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
+            ]);
+
+        if (!$rate) {
             $rate = new Review();
         }
 
@@ -73,10 +99,6 @@ class BookController extends Controller
         ])
             ->add('submit', SubmitType::class);
 
-        $reviewForm = $this->createForm(ReviewType::class, $rate, [
-            'method' => 'post',
-            'action' => $this->generateUrl('insert_new_review', ['id' => $book->getId()])
-        ]);
         //this will show the book
         return $this->render('@App/book/book.html.twig', [
             'book' => $book,

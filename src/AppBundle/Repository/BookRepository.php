@@ -20,6 +20,8 @@ class BookRepository extends EntityRepository
         }
 
         return $q
+            ->orderBy('book.createdAt', 'DESC')
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }

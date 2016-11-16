@@ -1,0 +1,41 @@
+.timeline {
+    list-style: none;
+}
+.timeline > li {
+    margin-bottom: 60px;
+}
+
+/* for Desktop */
+@media ( min-width : 640px ){
+    .timeline > li {
+        overflow: hidden;
+        margin: 0;
+        position: relative;
+    }
+    .timeline-date {
+        width: 110px;
+        float: left;
+        margin-top: 20px;
+    }
+    .timeline-content {
+        width: 75%;
+        float: left;
+        border-left: 3px #5b9bd1 solid;
+        padding-left: 30px;
+    }
+    .timeline-content:before {
+        font-family: 'Material Icons';
+        font-style: normal;
+        content: 'book';
+        width: 24px;
+        height: 24px;
+        color: #fff;
+        line-height: 1.8;
+        text-align: center;
+        background-color: #5b9bd1;
+        position: absolute;
+        left: 100px;
+        top: 18px;
+        border-radius: 100%;
+    }
+}

@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <img src="{{ asset('assets/node_modules/jquery-bar-rating/examples/img/antenna.png') }}"
+                             class="img-responsive" alt="">
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ app.user.name }}
+                            {{ app.user.lastname }}
+                        </div>
+                        <div class="profile-usertitle-job">
+                            Title
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <!-- SIDEBAR BUTTONS -->
+                    <div class="profile-userbuttons">
+                        <button type="button" class="btn btn-success btn-sm">Follow</button>
+                        <button type="button" class="btn btn-danger btn-sm">Message</button>
+                    </div>
+                    <!-- END SIDEBAR BUTTONS -->
+                    <!-- SIDEBAR MENU -->
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Overview </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    Account Settings </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    Tasks </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-flag"></i>
+                                    Help </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END MENU -->
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <h2>{{ 'Timeline'|trans }}</h2>
+                    <ul class="timeline">
+                        <li class="first-dot">
+                            <p class="timeline-date">{{ "now"|date('D g:i a') }}</p>
+                            <div class="timeline-content">
+                                <h3>{{ 'Today'|trans }}</h3>
+                            </div>
+                        </li>
+                        {% for event in timeline %}
+                            <li>
+                                <p class="timeline-date">{{ event.createdAt|date('D g:i a') }}</p>
+                                <div class="timeline-content">
+                                    <h3>{{ event.title }}</h3>
+                                    <p>{{ event.description }}</p>
+                                    <a href="{{ path('view_the_book', {id: event.parentId}) }}#review{{ event.userId }}" class="btn btn-default">{{ 'Open'|trans }}</a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab panes -->
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
+{% endblock %}

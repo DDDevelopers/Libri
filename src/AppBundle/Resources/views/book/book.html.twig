@@ -3,37 +3,101 @@
 {% block body %}
     <div class="row">
         <div class="col-md-4">
-            <img src="{{ asset('uploads/book1.jpg') }}" class="img-responsive img-rounded" alt="The book image">
+            <img {% if book.cover is not defined %}src="{{ asset('uploads/covers/' ~ book.cover) }}"{% else %}
+                    src="{{ asset('uploads/covers/aba-06.png') }}"{% endif %}
+                  class="img-responsive img-rounded" alt="The book image">
         </div>
         <div class="col-md-8">
             <h1>{{ book.title }}</h1>
+            <span>by {{ book.author.firstName }} {{ book.author.lastName }}</span>
+            <ul>
+                <li>Total reviews</li>
+                <li>AVG(rating)</li>
+            </ul>
             <p>{{ book.description }}</p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            {{ form_start(shelfForm) }}
-            {{ form_end(shelfForm) }}
-        </div>
-        <div class="col-md-4">
-            {% form_theme rateForm _self %}
-            {{ form_start(rateForm) }}
-            {{ form_end(rateForm) }}
-            <a href="{{ path('remove_the_review_from_the_book', {id: book.id}) }}">Remove review</a>
+            <div class="form-group">
+                {{ form_start(shelfForm) }}
+                {{ form_end(shelfForm) }}
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#bookReview">{{ 'Write a review'|trans }}</button>
+            </div>
+            <div class="form-group">
+                {{ form_start(rateForm) }}
+                {{ form_row(rateForm.rating) }}
+                {{ form_end(rateForm) }}
+                <a href="{{ path('remove_the_review_from_the_book', {id: book.id}) }}">{{ 'Remove rating'|trans }}</a>
+            </div>
         </div>
     </div>
-    {{ form_start(reviewForm) }}
-        {{ form_row(reviewForm.rating) }}
-        {{ form_row(reviewForm.shelf) }}
-        {{ form_row(reviewForm.finishedReading) }}
-        {{ form_row(reviewForm.startedReading) }}
-        {{ form_row(reviewForm.review) }}
-        <button class="btn btn-default" type="submit">Submit</button>
-    {{ form_end(reviewForm) }}
+
+    <!-- Modal -->
+    <div id="bookReview" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ 'Review the book'|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(reviewForm) }}
+                    {{ form_row(reviewForm.rating) }}
+                    {{ form_row(reviewForm.startedReading) }}
+                    {{ form_row(reviewForm.finishedReading) }}
+                    {{ form_row(reviewForm.review) }}
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    {{ form_end(reviewForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {# end modal #}
     <div class="col-md-12">
         <h3>Reviews by others</h3>
-        {% for review in book.reviews %}
-
-        {% endfor %}
+        <p>Here will be the reviews by others but not yours and more info, will be redesigned also !</p>
+        <div class="well">
+            {% for feedback in book.reviews %}
+                <div class="row" id="review{{ feedback.user.id }}">
+                    <div class="col-md-12">
+                        {% for i in 1..5 %}
+                            {% if i <= feedback.rating %}
+                                <span class="glyphicon glyphicon-star"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            {% endif %}
+                        {% endfor %}
+                        {{ feedback.user.username }}
+                        <span class="pull-right">{{ feedback.createdAt|date('h:i d/m') }}</span>
+                        <p>{{ feedback.review }}</p>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(function () {
+            $('.make_rating_beautiful').barrating({
+                theme: 'fontawesome-stars'
+            });
+            $('.show_the_calendar').datetimepicker({
+                format: 'DD.MM.YYYY',
+                viewMode: 'years',
+                toolbarPlacement: 'top'
+            });
+        });
+    </script>
 {% endblock %}

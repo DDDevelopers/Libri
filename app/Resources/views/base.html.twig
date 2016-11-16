@@ -1,36 +1,84 @@
-<!doctype html>
-<html class="no-js" lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-theme.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.css') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Bootstrap Admin Template</title>
+    {% block stylesheet %}
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{{ asset('assets/css/profileMenu.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/rating.css') }}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/material-design-icons.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/node_modules/jquery-bar-rating/dist/themes/fontawesome-stars.css') }}"
+              rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{ asset('assets/css/rating.css') }}">
+
     {% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
+
 <body>
-{{ include('navigation.html.twig') }}
-<div class="container">
-    {% for msg in app.session.flashBag.get('success') %}
-        <div class="alert-success">{{ msg }}</div>
-    {% endfor %}
-    {% for msg in app.session.flashBag.get('error') %}
-        <div class="alert-error">{{ msg }}</div>
-    {% endfor %}
-    {% block body %} {% endblock %}
+
+<div id="">
+    <!-- Navigation -->
+    {{ include('navigation.html.twig') }}
+
+    <div class="container">
+
+        {% block body %}
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        Blank Page
+                        <small>Subheading</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i> <a href="index.html">Dashboard</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-file"></i> Blank Page
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+        {% endblock %}
+    </div>
+    <!-- /.container-fluid -->
+
 </div>
+<!-- /#page-wrapper -->
+
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="{{ asset('assets/bower_components/jquery/dist/jquery.js') }}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
 {% block scripts %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/js/userInformation.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/jquery-bar-rating/dist/jquery.barrating.min.js') }}"></script>
+
 {% endblock %}
 </body>
+
 </html>

@@ -7,7 +7,6 @@ $(document).ready(function () {
             source: function (query, process) {
                 var books = [];
                 $.each(data, function (i, book) {
-                    // map[state.stateName] = state;
                     books.push(book.title);
                 });
 

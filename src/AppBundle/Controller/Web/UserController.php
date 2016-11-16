@@ -3,6 +3,7 @@ namespace AppBundle\Controller\Web;
 
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\Timeline;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,6 +21,21 @@ class UserController extends Controller
     public function indexAction(Request $request)
     {
         return $this->render('diar');
+    }
+
+    /**
+     * @Route("/me", name="my_profile")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function profileAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $timeline = $em->getRepository(Timeline::class)->getAllAndOrderByLatest();
+
+        return $this->render('@App/user/profile.html.twig', [
+            'timeline' => $timeline
+        ]);
     }
 
     /**
