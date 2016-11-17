@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/DDDevelopers/Libri.png?label=ready&title=Ready)](https://waffle.io/DDDevelopers/Libri)
 # Libri
 
 Just clone the app to your working location 
