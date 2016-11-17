@@ -3,6 +3,7 @@ namespace AppBundle\Controller\Web;
 
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\Shelf;
 use AppBundle\Entity\Timeline;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
@@ -35,6 +36,19 @@ class UserController extends Controller
 
         return $this->render('@App/user/profile.html.twig', [
             'timeline' => $timeline
+        ]);
+    }
+
+    /**
+     * @Route("/me/books", name="my_shelfed_books")
+     */
+    public function myBooksAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shelfs = $em->getRepository(Shelf::class)->findByUser($this->getUser()->getId());
+
+        return $this->render('@App/user/my-books.html.twig', [
+            'shelfs' => $shelfs
         ]);
     }
 
