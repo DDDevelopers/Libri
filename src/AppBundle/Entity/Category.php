@@ -25,6 +25,10 @@ class Category
      */
     private $createdAt;
     /**
+     * @ORM\Column(type="string")
+     */
+    private $icon;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Book", mappedBy="category")
      */
     private $books;
@@ -128,4 +132,22 @@ class Category
     {
         return $this->books;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param mixed $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+
 }

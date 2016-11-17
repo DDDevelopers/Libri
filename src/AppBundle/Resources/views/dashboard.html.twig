@@ -12,7 +12,7 @@
             {% set width = 100 / categories|length %}
             {% for category in categories %}
                 <li class="list-group-item" style="width: {{ width }}%;">
-                    <h2><i class="material-icons">color lens</i></h2>
+                    <img src="{{ asset('assets/images/bookcategories/' ~ category.icon) }}" alt="{{ category.title }}" width="30%">
                     <a href="#"><p class="category-title">{{ category.title }}</p></a>
                 </li>
             {% endfor %}
