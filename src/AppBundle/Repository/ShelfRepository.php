@@ -25,6 +25,7 @@ class ShelfRepository extends EntityRepository
             ->leftJoin('b.reviews', 'reviews')
             ->andWhere('user.id = :userid')
             ->setParameter('userid', $userId)
+            ->orderBy('sh.order', 'ASC')
             ->getQuery()
             ->getResult();
     }
