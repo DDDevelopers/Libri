@@ -1,7 +1,9 @@
 {{ form_start(form) }}
+            {{ form_row(form.cover) }}
             {{ form_row(form.author) }}
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
+            {{ form_row(form.category) }}
             {{ form_row(form.pages, {'label': 'Number of pages'}) }}
             {{ form_row(form.publishedAt) }}
             {{ form_row(form.isForSale, {'label': 'I wan\'t to sell it.'}) }}

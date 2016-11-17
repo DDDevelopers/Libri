@@ -6,7 +6,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ShelfRepository")
  * @ORM\Table(name="shelf")
  */
 class Shelf
@@ -33,6 +33,10 @@ class Shelf
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserBookShelf", mappedBy="shelf")
      */
     private $usersBooks;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $order;
 
     public function __construct()
     {
@@ -131,4 +135,22 @@ class Shelf
     {
         return $this->usersBooks;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param mixed $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+
 }

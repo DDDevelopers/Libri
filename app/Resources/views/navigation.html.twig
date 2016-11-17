@@ -7,7 +7,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="{{ path('homepage') }}">{{ 'Home'|trans }}</a></li>
-            <li><a href="#">{{ 'My books'|trans }}</a></li>
+            <li><a href="{{ path('my_shelfed_books') }}">{{ 'My books'|trans }}</a></li>
         </ul>
         <form class="navbar-form navbar-left" action="{{ path('homepage') }}">
             <div class="input-group">
