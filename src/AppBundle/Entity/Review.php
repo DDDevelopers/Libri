@@ -134,9 +134,6 @@ class Review
      */
     public function getStartedReading()
     {
-        if(is_object($this->startedReading)){
-            return ($this->startedReading)->format('d.m.Y');
-        }
         return $this->startedReading;
     }
 
@@ -161,9 +158,6 @@ class Review
      */
     public function getFinishedReading()
     {
-        if(is_object($this->finishedReading)){
-            return ($this->finishedReading)->format('d.m.Y');
-        }
         return $this->finishedReading;
     }
 

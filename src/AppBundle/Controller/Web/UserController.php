@@ -6,6 +6,7 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\Shelf;
 use AppBundle\Entity\Timeline;
 use AppBundle\Entity\User;
+use AppBundle\Form\ProfileUpdateType;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,14 +29,30 @@ class UserController extends Controller
      * @Route("/me", name="my_profile")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function profileAction()
+    public function profileAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $profileForm = $this->createForm(ProfileUpdateType::class, $this->getUser(), [
+            'action' => $this->generateUrl('my_profile')
+        ]);
+
+        $profileForm->handleRequest($request);
+
+        if($profileForm->isValid()){
+            $user = $profileForm->getData();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success', 'Updated your profile');
+            return $this->redirectToRoute('my_profile');
+        }
+
 
         $timeline = $em->getRepository(Timeline::class)->getAllAndOrderByLatest();
 
         return $this->render('@App/user/profile.html.twig', [
-            'timeline' => $timeline
+            'timeline' => $timeline,
+            'profileForm' => $profileForm->createView()
         ]);
     }
 
@@ -101,5 +118,14 @@ class UserController extends Controller
         return $this->render('AppBundle:user:my_books.html.twig', [
             'books' => $books
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/me/update", name="update_profile_data")
+     */
+    public function updateProfile(Request $request)
+    {
+        //handle update
     }
 }
