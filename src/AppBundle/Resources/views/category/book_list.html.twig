@@ -11,22 +11,20 @@
             {#//to set the width of the category#}
             {% set width = 100 / categories|length %}
             {% for category in categories %}
-                <li class="list-group-item" style="width: {{ width }}%;">
+                <li class="list-group-item {% if category == currentCategory %}active{% endif %}" style="width: {{ width }}%;">
                     <img src="{{ asset('assets/images/bookcategories/' ~ category.icon) }}" alt="{{ category.title }}" width="30%">
                     <a href="{{ path('category_books', {id: category.id}) }}"><p class="category-title">{{ category.title }}</p></a>
                 </li>
             {% endfor %}
         </ul>
     </div>
-    <div class="col-md-4 col-md-offset-8">
-        <h3 class="title">{% if books|length == 0 %}No books found!{% else %}Latest books{{ books|length }}{% endif %}</h3>
-        <ul class="list-group">
-            {% for book in books %}
-                <li class="list-group-item">
-                    {{ book.title }}
-                    <a href="{{ path('view_the_book', {id: book.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>View</a>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="row">
+        {% for book in currentCategory.books %}
+            <div class="col-xs-6 col-md-3">
+                <a href="{{ path('view_the_book', {id: book.id}) }}" class="thumbnail">
+                    <img src="{{ asset('uploads/covers/' ~ book.cover) }}" alt="{{ book.title }}">
+                </a>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

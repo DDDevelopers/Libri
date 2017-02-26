@@ -4,12 +4,15 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        chain_providers:
+            chain:
+                providers: [in_memory, my_db_provider]
         in_memory:
             memory:
                 users:
                     diar:
-                        password: diarpass
-                        roles: 'ROLE_ADMIN'
+                        password: diar123
+                        roles: 'ROLE_USER'
         my_db_provider:
             entity:
                 class: AppBundle:User

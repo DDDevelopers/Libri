@@ -11,13 +11,14 @@ class LoadShelfData implements FixtureInterface
     public function load(ObjectManager $em)
     {
         $shelf = [
-            'Read',
-            'Want to read',
-            'Currently reading',
+            'Read' => 3,
+            'Want to read' => 2,
+            'Currently reading' => 1,
         ];
 
-        foreach ($shelf as $item) {
+        foreach ($shelf as $item => $order) {
             $sh = new Shelf();
+            $sh->setOrder($order);
             $sh->setName($item);
             $em->persist($sh);
             $em->flush();

@@ -117,8 +117,25 @@ class BookController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $book = $form->getData();
             $em = $this->getDoctrine()->getManager();
+
+
+            // $file stores the uploaded PDF file
+            $file = $book->getFile();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.jpg';
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('covers_directory'),
+                $fileName
+            );
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $book->setCover($fileName);
+
             $em->persist($book);
             $em->flush();
 
@@ -129,6 +146,41 @@ class BookController extends Controller
         return $this->render('@App/book/register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function coverAction(Request $request, Book $book)
+    {
+        $form = $this->createForm(BookCoverType::class, $book);
+
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            // $file stores the uploaded PDF file
+            $file = $book->getCover();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.jpg';
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('covers_directory'),
+                $fileName
+            );
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $book->setCover($fileName);
+
+            $em->persist($book);
+            $em->flush();
+
+            $this->addFlash('success', 'The cover successfuly updated');
+        }
+
+
+        return $this->redirectToRoute('view_the_book', ['id' => $book->getId()]);
+
     }
 
 

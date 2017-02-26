@@ -34,7 +34,7 @@ class Shelf
      */
     private $usersBooks;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="order_number")
      */
     private $order;
 

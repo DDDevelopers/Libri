@@ -43,7 +43,7 @@ class BookType extends AbstractType
                 ],
                 'html5' => false
             ])
-            ->add('cover', FileType::class, array('label' => 'Cover Image'))
+            ->add('file', FileType::class, array('label' => 'Cover Image'))
             ->add('isForSale')
             ->add('isForExchange')
         ;

@@ -77,15 +77,34 @@ class Book
     private $usersShelfed;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
-     * @Assert\NotBlank(message="Please add a cover for this book.")
      */
     private $cover;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="books")
      */
     private $category;
+
+    private $file;
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+
 
     public function getCover()
     {

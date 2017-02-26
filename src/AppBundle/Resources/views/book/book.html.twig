@@ -3,9 +3,12 @@
 {% block body %}
     <div class="row">
         <div class="col-md-4">
-            <img {% if book.cover is not defined %}src="{{ asset('uploads/covers/' ~ book.cover) }}"{% else %}
-                    src="{{ asset('uploads/covers/aba-06.png') }}"{% endif %}
-                  class="img-responsive img-rounded" alt="The book image">
+            {% if book.cover is not null %}
+                <img src="{{ asset('uploads/covers/' ~ book.cover) }}" alt="{{ book.title }}">
+            {% else %}
+                <h4>{{ 'Upload a cover for this book'|trans }}</h4>
+
+            {% endif %}
         </div>
         <div class="col-md-8">
             <h1>{{ book.title }}</h1>
