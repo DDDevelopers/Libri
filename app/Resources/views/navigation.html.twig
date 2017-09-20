@@ -8,6 +8,9 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="{{ path('homepage') }}">{{ 'Home'|trans }}</a></li>
             <li><a href="{{ path('my_shelfed_books') }}">{{ 'My books'|trans }}</a></li>
+            {% if is_granted("ROLE_STORE") %}
+                <li><a href="{{ '#' }}">{{ 'navigation.store'|trans }}</a></li>
+            {% endif %}
         </ul>
         <form class="navbar-form navbar-left" action="{{ path('homepage') }}">
             <div class="input-group">

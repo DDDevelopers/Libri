@@ -16,7 +16,7 @@ security:
         my_db_provider:
             entity:
                 class: AppBundle:User
-                property: email
+                property: username
     encoders:
         AppBundle\Entity\User: bcrypt
 
